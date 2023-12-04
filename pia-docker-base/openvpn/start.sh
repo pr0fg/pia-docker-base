@@ -4,12 +4,12 @@
 set -e
 
 if ! [ -f /entrypoint.sh ]; then
-    echo "[ERROR] No entrypoint detected! Your image must add /entrypoint.sh in order to use this base container."
+    echo "[ERROR] No entrypoint detected! Your image must add /entrypoint.sh in order to use this base container." | ts '%Y-%m-%d %H:%M:%.S'
     sleep 10
     exit 1
 fi
 
-echo "[INFO] Starting..."
+echo "[INFO] Starting..." | ts '%Y-%m-%d %H:%M:%.S'
 
 check_network=$(ifconfig | grep docker0 || true)
 if [[ ! -z "${check_network}" ]]; then

@@ -17,7 +17,7 @@ if [[ -z "$HEALTHCHECK_PING_IP" ]]; then
     HEALTHCHECK_PING_IP="8.8.8.8"
 fi
 
-echo "[INFO] Healthcheck settings => Interval: $HEALTHCHECK_INTERVAL DNS Host: $HEALTHCHECK_DNS_HOST Ping IP: $HEALTHCHECK_PING_IP Process: $HEALTHCHECK_PROCESS_NAME"
+echo "[INFO] Healthcheck settings => Interval: $HEALTHCHECK_INTERVAL DNS Host: $HEALTHCHECK_DNS_HOST Ping IP: $HEALTHCHECK_PING_IP Process: $HEALTHCHECK_PROCESS_NAME" | ts '%Y-%m-%d %H:%M:%.S'
 
 sleep 15
 
