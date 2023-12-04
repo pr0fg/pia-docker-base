@@ -177,7 +177,7 @@ main() {
     update_hosts
     update_routes
     update_firewall
-    sudo -u nobody /etc/openvpn/healthcheck.sh "$HEALTHCHECK_INTERVAL" "$HEALTHCHECK_HOST" "$HEALTHCHECK_PROCESS_NAME" "$NAME_SERVERS" &
+    sudo -u nobody /etc/openvpn/healthcheck.sh "$HEALTHCHECK_INTERVAL" "$HEALTHCHECK_DNS_HOST" "$HEALTHCHECK_PING_IP" "$HEALTHCHECK_PROCESS_NAME" &
     sudo -u root --preserve-env="$PRESERVE_ENV" /entrypoint.sh & # Done to drop all env not passed via docker
 }
 

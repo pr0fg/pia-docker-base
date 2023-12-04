@@ -1,38 +1,38 @@
 #!/bin/bash
 
-HEALTHCHECK_INTERVAL="$1"
-HEALTH_DNS_HOST="$2"
-HEALTHCHECK_PROCESS_NAME="$3"
-HEALTHCHECK_PING_HOST="$4"
+"$HEALTHCHECK_INTERVAL" "$HEALTHCHECK_DNS_HOST" "$HEALTHCHECK_PING_IP" "$HEALTHCHECK_PROCESS_NAME"
 
-if [[ -z "$1" ]]; then
+HEALTHCHECK_INTERVAL="$1"
+HEALTHCHECK_DNS_HOST="$2"
+HEALTHCHECK_PING_IP="$3"
+HEALTHCHECK_PROCESS_NAME="$4"
+
+if [[ -z "$HEALTHCHECK_INTERVAL" ]]; then
     HEALTHCHECK_INTERVAL=10
 fi
 
-if [[ -z "$2" ]]; then
-    HEALTH_DNS_HOST="google.com"
+if [[ -z "$HEALTHCHECK_DNS_HOST" ]]; then
+    HEALTHCHECK_DNS_HOST="google.com"
 fi
 
-if [[ -z "$4" ]]; then
-    HEALTHCHECK_PING_HOST="8.8.8.8"
-else
-    HEALTHCHECK_PING_HOST=$(echo "$HEALTHCHECK_PING_HOST" | cut -d',' -f1)
+if [[ -z "$HEALTHCHECK_PING_IP" ]]; then
+    HEALTHCHECK_PING_IP="8.8.8.8"
 fi
 
-echo "[INFO] Healthcheck settings => Interval: $HEALTHCHECK_INTERVAL DNS Host: $HEALTH_DNS_HOST Ping Host: $HEALTHCHECK_PING_HOST Process: $3"
+echo "[INFO] Healthcheck settings => Interval: $HEALTHCHECK_INTERVAL DNS Host: $HEALTHCHECK_DNS_HOST Ping IP: $HEALTHCHECK_PING_IP Process: $HEALTHCHECK_PROCESS_NAME"
 
 sleep 15
 
 while true; do
 
     # DNS Check
-    if ! nslookup "$HEALTH_DNS_HOST" 2>&1 >/dev/null; then
+    if ! nslookup "$HEALTHCHECK_DNS_HOST" 2>&1 >/dev/null; then
         echo "[WARNING] DNS resolution failed. Exiting..." | ts '%Y-%m-%d %H:%M:%.S'
         kill 1
     fi
 
     # Ping Check
-    if ! ping -c 2 -w 5 "$HEALTHCHECK_PING_HOST" 2>&1 >/dev/null; then
+    if ! ping -c 2 -w 5 "$HEALTHCHECK_PING_IP" 2>&1 >/dev/null; then
         echo "[WARNING] Network is down. Exiting..." | ts '%Y-%m-%d %H:%M:%.S'
         kill 1
     fi
