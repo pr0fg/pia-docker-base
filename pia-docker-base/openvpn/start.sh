@@ -57,6 +57,7 @@ fi
 echo "${VPN_USERNAME}" > /etc/openvpn/credentials.conf
 echo "${VPN_PASSWORD}" >> /etc/openvpn/credentials.conf
 echo "auth-user-pass /etc/openvpn/credentials.conf" >> "${VPN_CONFIG}"
+chmod 600 /etc/openvpn/credentials.conf
 
 export VPN_REMOTE_LINE=$(cat "${VPN_CONFIG}" | grep -P -o -m 1 '(?<=^remote\s)[^\n\r]+' | sed -e 's~^[ \t]*~~;s~[ \t]*$~~')
 if [[ ! -z "${VPN_REMOTE_LINE}" ]]; then
@@ -149,4 +150,4 @@ done
 declare -px > /tmp/env
 
 echo "[INFO] Starting OpenVPN..." | ts '%Y-%m-%d %H:%M:%.S'
-exec openvpn --pull-filter ignore route-ipv6 --pull-filter ignore ifconfig-ipv6 --config "${VPN_CONFIG}" --user nobody --group nogroup --script-security 2 --up /etc/openvpn/iptables.sh --down /etc/openvpn/stop.sh --persist-tun --persist-key --keepalive 10 60
+exec openvpn --pull-filter ignore route-ipv6 --pull-filter ignore ifconfig-ipv6 --config "${VPN_CONFIG}" --user nobody --group nogroup --auth-nocache --script-security 2 --up /etc/openvpn/iptables.sh --down /etc/openvpn/stop.sh --persist-tun --persist-key --keepalive 10 60
