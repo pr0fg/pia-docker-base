@@ -57,7 +57,6 @@ fi
 echo "${VPN_USERNAME}" > /etc/openvpn/credentials.conf
 echo "${VPN_PASSWORD}" >> /etc/openvpn/credentials.conf
 echo "auth-user-pass /etc/openvpn/credentials.conf" >> "${VPN_CONFIG}"
-chmod 600 /etc/openvpn/credentials.conf
 
 export VPN_REMOTE_LINE=$(cat "${VPN_CONFIG}" | grep -P -o -m 1 '(?<=^remote\s)[^\n\r]+' | sed -e 's~^[ \t]*~~;s~[ \t]*$~~')
 if [[ ! -z "${VPN_REMOTE_LINE}" ]]; then
