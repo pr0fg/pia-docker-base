@@ -84,6 +84,7 @@ EXPOSE 8080 # If needed
 |`VPN_REGION`| Yes | PIA VPN Region | `VPN_REGION=ca_toronto`||
 |`VPN_USERNAME`| Yes | PIA username | `VPN_USERNAME=pXXXXXX`||
 |`VPN_PASSWORD`| Yes | PIA password | `VPN_PASSWORD=XXXXXXX`||
+|`VPN_USE_UDP`| No | Use TCP | `VPN_USE_UDP=1`| false |
 |`LAN_NETWORK`| Yes | Local network with CIDR notation | `LAN_NETWORK=192.168.1.0/24`||
 |`HEALTHCHECK_PROCESS_NAME`| No | Process health check process name |`HEALTHCHECK_PROCESS_NAME=squid`|**Note: Add in Dockerfile!**|
 |`TZ`| No | Timezone |`TZ=America/Toronto`| System default |

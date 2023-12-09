@@ -42,6 +42,14 @@ echo "[INFO] OpenVPN config file found at /etc/openvpn/configs/${VPN_REGION}" | 
 cp "/etc/openvpn/configs/${VPN_REGION}.ovpn" /etc/openvpn/config.ovpn
 export VPN_CONFIG="/etc/openvpn/config.ovpn"
 
+sed -i 's/resolv-retry infinite/resolv-retry 15/g' "$VPN_CONFIG"
+
+if [[ -z "$VPN_USE_UDP" ]]; then
+    echo "[INFO] Enabling TCP connections for OpenVPN" | ts '%Y-%m-%d %H:%M:%.S'
+    sed -i 's/proto udp/proto tcp/g' "$VPN_CONFIG"
+    sed -i 's/ 1198$/ 502/g' "$VPN_CONFIG"
+fi
+
 if [[ -z "${VPN_USERNAME}" ]]; then
     echo "[ERROR] VPN_USERNAME not specified. Exiting..." | ts '%Y-%m-%d %H:%M:%.S'
     sleep 10
