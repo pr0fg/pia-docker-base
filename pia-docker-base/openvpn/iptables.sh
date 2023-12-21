@@ -70,7 +70,8 @@ update_routes() {
         fi
     done
     local -r public_nic="$(ip route show "$cur_remote_ip"|cut -d' ' -f5)"
-    ip route add "$LAN_NETWORK" dev "$public_nic"
+    local -r public_nic_hop="$(ip route show "$cur_remote_ip"|cut -d' ' -f3)"
+    ip route add "$LAN_NETWORK" via "$public_nic_hop" dev "$public_nic"
 }
 
 update_hosts() {
