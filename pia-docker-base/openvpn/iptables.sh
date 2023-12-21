@@ -69,7 +69,7 @@ update_routes() {
               via "${route_gateways[i]}" metric "${route_metrics[i]}" dev "$dev"
         fi
     done
-    ip route add "$LAN_NETWORK" via dev "$dev"
+    ip route add "$LAN_NETWORK" dev "$dev"
 }
 
 update_hosts() {
