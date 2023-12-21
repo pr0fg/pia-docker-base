@@ -69,7 +69,8 @@ update_routes() {
               via "${route_gateways[i]}" metric "${route_metrics[i]}" dev "$dev"
         fi
     done
-    ip route add "$LAN_NETWORK" dev "$dev"
+    local -r public_nic="$(ip route show "$cur_remote_ip"|cut -d' ' -f5)"
+    ip route add "$LAN_NETWORK" dev "$public_nic"
 }
 
 update_hosts() {
